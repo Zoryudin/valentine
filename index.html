@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Valentine Surprise</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+            rel="stylesheet"
+        />
+        <style>
+            @keyframes roseAnimation {
+                0% {
+                    transform: scale(0);
+                    opacity: 0;
+                }
+                50% {
+                    transform: scale(1.2);
+                    opacity: 1;
+                }
+                100% {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+            }
+
+            .rose {
+                animation: roseAnimation 2s ease-out forwards;
+            }
+            /* Styling untuk track (progress) */
+            input[type="range"] {
+                -webkit-appearance: none; /* Menghilangkan styling default di WebKit */
+                appearance: none;
+                width: 100%;
+                height: 10px;
+                background: #ddd; /* Warna track default */
+                border-radius: 5px;
+                outline: none;
+            }
+
+            /* Styling untuk track progress (Chrome, Safari, Opera) */
+            input[type="range"]::-webkit-slider-runnable-track {
+                height: 10px;
+                background: pink; /* Warna progress */
+                border-radius: 5px;
+            }
+
+            /* Styling untuk thumb (Chrome, Safari, Opera) */
+            input[type="range"]::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                appearance: none;
+                width: 60px;
+                height: 60px;
+                background: url("asset/heart.png") center center;
+                background-size: cover;
+                border: none;
+                cursor: pointer;
+                margin-top: -25px; /* Sesuaikan posisi thumb */
+            }
+
+            /* Styling untuk track progress (Firefox) */
+            input[type="range"]::-moz-range-track {
+                height: 10px;
+                background: #ddd; /* Warna track default */
+                border-radius: 5px;
+            }
+
+            input[type="range"]::-moz-range-progress {
+                height: 10px;
+                background: pink; /* Warna progress */
+                border-radius: 5px;
+            }
+
+            /* Styling untuk thumb (Firefox) */
+            input[type="range"]::-moz-range-thumb {
+                width: 60px;
+                height: 60px;
+                background: url("https://i.ibb.co/zSgfhbz/heart.png") center
+                    center;
+                background-size: cover;
+                border: none;
+                cursor: pointer;
+            }
+
+            /* Styling untuk track progress (Microsoft Edge) */
+            input[type="range"]::-ms-track {
+                width: 100%;
+                height: 10px;
+                background: transparent;
+                border-color: transparent;
+                color: transparent;
+            }
+
+            input[type="range"]::-ms-fill-lower {
+                background: pink; /* Warna progress */
+                border-radius: 5px;
+            }
+
+            input[type="range"]::-ms-fill-upper {
+                background: #ddd; /* Warna track default */
+                border-radius: 5px;
+            }
+
+            /* Styling untuk thumb (Microsoft Edge) */
+            input[type="range"]::-ms-thumb {
+                width: 60px;
+                height: 60px;
+                background: url("https://i.ibb.co/zSgfhbz/heart.png") center
+                    center;
+                background-size: cover;
+                border: none;
+                cursor: pointer;
+                margin-top: 0; /* Sesuaikan posisi thumb */
+            }
+        </style>
+    </head>
+    <body class="bg-pink-100 flex flex-col items-center justify-center">
+        <section class="text-center py-10 px-1">
+            <div class="" id="scene-1">
+                <h1 class="text-4xl font-semibold p-2">
+                    Haiii, ada sesuatu nih buat kamu. mau lihat?
+                </h1>
+                <p class="p-2">
+                    <button class="font-bold text-green-600" id="btn-ya">
+                        IYA
+                    </button>
+                    / <span class="font-bold text-red-600">TIDAK</span>
+                </p>
+                <div class="" id="buttons-tdk">
+                    <button
+                        class="bg-red-600 rounded-lg px-3 py-1 text-white hover:bg-red-700 transition duration-300"
+                        btn-type="tidak"
+                    >
+                        Tidak
+                    </button>
+                    <button
+                        class="bg-red-600 rounded-lg px-3 py-1 text-white hover:bg-red-700 transition duration-300"
+                        btn-type="tidak"
+                    >
+                        Engga
+                    </button>
+                </div>
+            </div>
+
+            <div id="scene-2" class="mt-3 hidden">
+                <h1 class="text-xl p-2">
+                    Sebelum lanjut kamu harus menjawab ini dulu, seberapa besar
+                    cintamu padaku?😍😍
+                </h1>
+                <div class="flex justify-center flex-col p-10 gap-2">
+                    <input
+                        type="range"
+                        min="0"
+                        max="100"
+                        value="0"
+                        class="w-full"
+                        id="slider"
+                        oninput="updateSlider(this.value)"
+                    />
+                    <div class="">
+                        <span class="">Hasil nya adalah :</span>
+                        <div class="font-normal" id="hasil">Y</div>
+                    </div>
+                    <input
+                        type="submit"
+                        class="bg-green-600 rounded-lg px-3 py-1 text-white hover:bg-green-700 transition duration-300"
+                        value="Next"
+                        id="submit-1"
+                    />
+                </div>
+            </div>
+
+            <div class="mt-3 hidden" id="scene-3">
+                <h1 class="text-xl p-2">
+                    Coba sih sebutin apa saja yang kamu suka dari aku, sebutin 5
+                    saja😁
+                </h1>
+                <div class="flex justify-center flex-col px-10 p-3 gap-2">
+                    <form id="crudForm" class="flex gap-2 w-full border">
+                        <input
+                            type="text"
+                            class="rounded-lg px-2 py-1 focus:outline-black w-full"
+                            placeholder="Ketik disini"
+                            id="inputList"
+                        />
+                        <input
+                            type="submit"
+                            value="Submit"
+                            class="bg-blue-600 rounded-lg px-3 py-1 text-white hover:bg-blue-700 transition duration-300"
+                        />
+                    </form>
+                    <div
+                        class="overflow-y-auto h-64 bg-white p-6 rounded-lg shadow-lg"
+                    >
+                        <ul class="text-gray-700 text-left" id="list"></ul>
+                        <button
+                            class="bg-red-600 rounded-lg px-3 py-1 text-white hover:bg-red-700 transition duration-300"
+                            id="reset"
+                        >
+                            Reset
+                        </button>
+                    </div>
+                </div>
+                <div class="">
+                    <button
+                        class="bg-gray-600 rounded-lg px-3 py-1 text-white cursor-default"
+                        id="next"
+                    >
+                        Next
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="text-center py-10 px-5 hidden" id="final">
+            <h1 class="text-4xl font-bold text-center text-red-600 mb-4">
+                Untuk Pacarku Tersayang ❤️
+            </h1>
+            <p class="text-lg text-gray-700 mb-8">
+                Ada pesan spesial untukmu, scroll ke bawah ya...
+            </p>
+
+            <div
+                class="overflow-y-auto h-96 bg-white p-6 rounded-lg shadow-lg mb-8"
+            >
+                <p class="text-gray-700" id="surat">
+                    Sayangku,<br /><br />
+                    Aku ingin kamu tahu betapa berartinya kamu bagiku. Setiap
+                    hari bersamamu adalah hadiah terindah yang pernah aku
+                    terima. Kamu membuat hidupku lebih berwarna dan penuh dengan
+                    kebahagiaan.<br /><br />
+                    Aku berharap kita bisa terus bersama, melewati semua suka
+                    dan duka. Aku mencintaimu lebih dari apapun.<br /><br />
+                    Terima kasih telah menjadi bagian dari hidupku.<br /><br />
+                    Dengan cinta,<br />
+                    Rusin
+                </p>
+            </div>
+
+            <button
+                id="showRose"
+                class="bg-red-500 text-white px-6 py-2 rounded-full hover:bg-red-600 transition duration-300"
+            >
+                Lihat Kejutan
+            </button>
+
+            <div id="rose" class="hidden mt-8">
+                <div class="rose">
+                    <img
+                        src="/asset/mawar.webp"
+                        alt="Rose"
+                        class="w-32 h-32 mx-auto"
+                    />
+                </div>
+                <p class="text-lg text-gray-700 mt-4">
+                    Ini untukmu, sayangku ❤️
+                </p>
+            </div>
+        </section>
+        <audio id="audio">
+            <source src="musik/Sweet.ogg" type="audio/ogg" />
+            <source src="musik/Sweet.mp3" type="audio/mp3" />
+        </audio>
+        <script>
+            const tidak = document.querySelectorAll('[btn-type="tidak"]');
+            const ya = document.getElementById("btn-ya");
+            const buttonsTdk = document.getElementById("buttons-tdk");
+            const hasil = document.getElementById("hasil");
+            const submit1 = document.getElementById("submit-1");
+            var btnCount = 2;
+            var audio = document.querySelector("audio");
+
+            
+
+            tidak.forEach((btn) => {
+                btn.addEventListener("click", () => {
+                    btn.classList.add("opacity-0");
+                    btn.classList.add("cursor-default");
+                    btnCount--;
+                    console.log(btnCount);
+
+                    if (btnCount === 0) {
+                        buttonsTdk.classList.add("hidden");
+                        ya.classList.add(
+                            "bg-green-600",
+                            "hover:bg-green-700",
+                            "transition",
+                            "duration-300",
+                            "animate-bounce",
+                            "px-3",
+                            "py-1",
+                            "rounded-lg"
+                        );
+                        ya.classList.replace("text-green-600", "text-white");
+                        ya.addEventListener("click", () => {
+                            document
+                                .getElementById("scene-2")
+                                .classList.remove("hidden");
+                            ya.classList.remove("animate-bounce");
+                        });
+                    }
+                });
+            });
+
+            submit1.addEventListener("click", () => {
+                submit1.classList.add("hidden");
+                document.getElementById("scene-3").classList.remove("hidden");
+                const slider = document.getElementById("slider");
+                slider.disabled = true;
+            });
+
+            function updateSlider(value) {
+                if (value < 20) {
+                    hasil.innerText = "Y";
+                } else if (value < 30) {
+                    hasil.innerText = "SUMPAHH SEGITU DOANG?";
+                } else if (value < 50) {
+                    hasil.innerText = "NYEHHH KURANGG";
+                } else if (value < 70) {
+                    hasil.innerText = "oke sih....";
+                } else if (value < 90) {
+                    hasil.innerText = "Boleh lahh";
+                } else {
+                    hasil.innerText = "AWWWWWWWWWW LOVE YOU MORE";
+                }
+            }
+
+            // Fungsi untuk mengambil data dari local storage
+            function getData() {
+                return JSON.parse(localStorage.getItem("crudData")) || [];
+            }
+
+            // Fungsi untuk menyimpan data ke local storage
+            function saveData(data) {
+                localStorage.setItem("crudData", JSON.stringify(data));
+            }
+
+            // Fungsi untuk menampilkan data di tabel
+            function renderTable() {
+                const data = getData();
+                const ul = document.querySelector("#list");
+                // console.log(ul);
+                ul.innerHTML = "";
+
+                data.forEach((list, index) => {
+                    const li = document.createElement("li");
+                    li.innerHTML = `
+            <li>${index + 1}. ${list}</li>
+        `;
+                    ul.appendChild(li);
+                });
+                const jdata = getData();
+            const next = document.getElementById("next");
+            if (jdata.length == 5) {
+                next.classList.add("bg-green-600", "rounded-lg", "px-3", "py-1", "text-white", "hover:bg-green-700", "transition", "duration-300", 'cursor-pointer');
+                next.addEventListener("click", () => {
+                    const final = document.getElementById("final");
+
+                    final.classList.remove("hidden");
+
+                    audio
+                        .play()
+                        .then(() => {
+                            // Audio telah berhasil diputar
+                        })
+                        .catch((error) => {
+                            console.error("Autoplay gagal:", error);
+                        });
+                    final.scrollIntoView({
+                        behavior: "smooth",
+                    });
+
+                });
+            }
+            }
+
+            // Fungsi untuk menambahkan atau mengedit data
+            document
+                .getElementById("crudForm")
+                .addEventListener("submit", function (e) {
+                    e.preventDefault();
+                    const list = document.getElementById("inputList").value;
+                    const data = getData();
+                    // Tambahkan data baru
+                    if (!list) {
+                        alert("tidak boleh kosong ya sayang");
+                    } else {
+                        data.push(list);
+                    }
+                    saveData(data);
+                    renderTable();
+                    document.getElementById("crudForm").reset();
+                });
+
+            // Fungsi untuk menghapus data
+            document
+                .getElementById("reset")
+                .addEventListener("click", function (e) {
+                    localStorage.clear();
+                    renderTable();
+                });
+
+            // Render tabel saat halaman dimuat
+            renderTable();
+
+            document
+                .getElementById("showRose")
+                .addEventListener("click", function () {
+                    document.getElementById("rose").classList.remove("hidden");
+                    this.scrollIntoView({
+                        behavior: "smooth",
+                    })
+                });
+        </script>
+    </body>
+</html>
